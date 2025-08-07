@@ -1,47 +1,56 @@
-# Astro Starter Kit: Minimal
+# Note Keeper – Astro App
+
+Minimal, responsive web-based notes application for creating, viewing, editing, and deleting notes.
+
+## Features
+
+- Minimal design, light theme (Primary: #007BFF, Secondary: #6C757D, Accent: #FFC107)
+- Responsive UI: header, sidebar notes list, main note editor area
+- Add, select, create, edit, delete notes
+- Stubs for backend REST API integration (currently uses localStorage; replace in `src/utils/notesService.ts`)
+- Easy to extend and test
+
+## Structure
+
+```
+src/
+├── components/
+│   ├── Header.astro        # App header
+│   ├── Sidebar.astro       # Notes list and add button
+│   ├── NoteEditor.astro    # Main note view/editor
+│   └── ThemeToggle.astro   # Optional theme switch
+├── layouts/
+│   └── Layout.astro        # Base layout
+├── utils/
+│   └── notesService.ts     # Note CRUD logic (swap for REST API client)
+└── pages/
+    └── index.astro         # Main notes app UI
+```
+
+## Develop
 
 ```sh
-npm create astro@latest -- --template minimal
+npm install
+npm run dev
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## REST API Preparation
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+- Note CRUD is stubbed via localStorage in `src/utils/notesService.ts`.
+- To integrate with backend:
+  - Replace functions in that service with REST API calls (see exported signatures).
+  - Use environment variables from `.env` for configuring API endpoints if needed.
 
-## 🚀 Project Structure
+## UI
 
-Inside of your Astro project, you'll see the following folders and files:
+- Header: App title, always visible
+- Sidebar: List notes, add note button
+- Main area: Shows and edits selected note
+- Mobile-friendly (sidebar collapses stacked on mobile)
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+## Extending/Testing
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+- Logic is isolated in `notesService.ts`.
+- Components are stateless, all state/actions handled via parent/main script.
+- Easily adapted for automated tests via JS injection or component libraries.
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

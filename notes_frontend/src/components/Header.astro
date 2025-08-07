@@ -1,0 +1,40 @@
+---
+/** Header component displaying app title. */
+const appTitle = "Note Keeper";
+---
+
+<header class="header">
+  <h1>{appTitle}</h1>
+</header>
+
+<style>
+  .header {
+    width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid var(--border-color, #e5e5e5);
+    padding: 1rem 2rem;
+    color: #007BFF;
+    font-weight: 700;
+    font-size: 1.6rem;
+    letter-spacing: 0.04em;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.03);
+    display: flex;
+    align-items: center;
+  }
+  .header h1 {
+    font-size: 1.6rem;
+    color: #007BFF;
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+  @media (max-width: 600px) {
+    .header {
+      padding: 0.75rem 1rem;
+    }
+    .header h1 {
+      font-size: 1.15rem;
+    }
+  }
+</style>
