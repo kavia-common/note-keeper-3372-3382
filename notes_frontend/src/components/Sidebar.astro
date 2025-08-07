@@ -1,0 +1,135 @@
+---
+/** Sidebar component displaying note list and add button.
+    Props:
+      - notes: array of note objects {id, title, updatedAt}
+      - selectedNoteId: ID of the selected note
+      - onSelect: function(id) to select note
+      - onCreate: function() to create new note
+*/
+const { notes = [], selectedNoteId = null, onSelect, onCreate } = Astro.props;
+---
+
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <span class="list-title">Notes</span>
+    <button class="add-btn" title="New note" type="button" onClick={onCreate}>
+      <span aria-hidden="true">+</span>
+    </button>
+  </div>
+  <ul class="note-list">
+    {notes.length === 0 && (
+      <li class="note-empty">No notes yet</li>
+    )}
+    {notes.map(note => (
+      <li
+        class={`note-item${selectedNoteId === note.id ? ' selected' : ''}`}
+        key={note.id}
+        onClick={() => onSelect(note.id)}
+        tabIndex="0"
+        aria-selected={selectedNoteId === note.id}
+      >
+        <span class="note-title">{note.title || "Untitled"}</span>
+        <span class="note-date">{note.updatedAt ? new Date(note.updatedAt).toLocaleDateString() : ""}</span>
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<style>
+  .sidebar {
+    background: #f8f9fa;
+    width: 270px;
+    border-right: 1px solid var(--border-color, #f3f3f3);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    min-width: 0;
+    height: 100vh; /* for sticky scroll, override in main area on mobile */
+  }
+  .sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1rem 0.5rem 1rem;
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: #6C757D;
+    border-bottom: 1px solid var(--border-color, #efefef);
+  }
+  .list-title {
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    font-size: 1.01rem;
+  }
+  .add-btn {
+    border: none;
+    background: #007BFF;
+    color: #fff;
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.55rem;
+    cursor: pointer;
+    transition: background-color .18s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .add-btn:hover,.add-btn:focus {
+    background: #0056b3;
+  }
+  .note-list {
+    margin: 0; padding: 0.8rem 0;
+    flex: 1 1 0; min-height: 0; overflow-y: auto;
+    list-style: none;
+    scrollbar-color: #007BFF #ededed;
+  }
+  .note-item {
+    cursor: pointer;
+    padding: 0.7rem 1.2rem;
+    outline: none;
+    font-size: 1.01rem;
+    color: #444;
+    border-left: 3px solid transparent;
+    display: flex; flex-direction: column;
+    background: transparent;
+    border-radius: 5px;
+    transition: all .13s;
+  }
+  .note-item.selected {
+    background: #E9F3FF;
+    color: #007BFF;
+    border-left: 3px solid #007BFF;
+  }
+  .note-item:hover:not(.selected),
+  .note-item:focus-visible:not(.selected) {
+    background: #f1f5fa;
+    color: #0056b3;
+  }
+  .note-title {
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 95%;
+  }
+  .note-date {
+    color: #aaa; font-size: 0.85rem; margin-top: 2px;
+  }
+  .note-empty {
+    padding: 1.5rem 1.2rem;
+    text-align: center; color: #bdbdbd;
+    font-style: italic; font-size: 1.05rem;
+  }
+  @media (max-width: 900px) {
+    .sidebar {
+      width: 35vw; min-width: 130px; max-width: 190px;
+    }
+  }
+  @media (max-width: 600px) {
+    .sidebar {
+      position: sticky;
+      top: 0;
+      width: 100vw; min-width: 0; max-width: none; height: auto;
+      border-right: none; border-bottom: 1px solid #eee;
+      z-index: 15;
+    }
+    .sidebar-header { padding: 0.7rem 0.7rem 0.3rem 0.7rem; }
+    .note-list { padding: 0.3rem 0; }
+    .note-item, .note-empty { padding: 0.55rem 0.8rem; }
+  }
+</style>
